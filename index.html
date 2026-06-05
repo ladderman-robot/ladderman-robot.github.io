@@ -100,7 +100,7 @@
               <div class="publication-links">
                 <!-- Arxiv Link. -->
                 <span class="link-block">
-                  <a target="_blank" href=""
+                  <a target="_blank" href="https://arxiv.org/abs/2606.05873"
                      class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                         <i class="ai ai-arxiv"></i>
@@ -110,7 +110,7 @@
                 </span>
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a target="_blank" href=""
+                  <a target="_blank" href="./static/images/LadderMan.pdf"
                      class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                         <i class="fas fa-file-pdf"></i>
@@ -133,7 +133,7 @@
 
               <!-- Code Link. -->
               <span class="link-block">
-                <a
+                <a target="_blank" href="https://github.com/amazon-far/LadderMan"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -152,7 +152,7 @@
   <section class="section">
     <div class="container">
           <h2 class="title is-2" style="text-align: center;">Abstract</h2>
-          <div class="content has-text-justified">
+          <div class="content has-text-justified" style="width: 75%; margin: 0 auto;">
             <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
               Humanoid robots hold great promise for operating in human-centered environments, yet ladder climbing remains one of the most challenging tasks due to sparse footholds and handholds, complex whole-body coordination, and sensitivity to perception and control errors. We present <strong>LadderMan</strong>, a unified system that enables humanoid robots to robustly climb diverse ladders and perform manipulation under such constrained conditions. Our climbing policy is built on a scalable two-stage learning pipeline, where we use hybrid motion tracking to learn multiple climbing experts from a single reference motion, and distill these experts into a unified depth-based visuomotor climbing policy via hybrid imitation and reinforcement learning. To enable real-world deployment, we leverage vision foundation models to bridge the sim-to-real gap in depth perception. 
               Building on the learned climbing policy, we further train a separate manipulation policy using a dual-agent formulation, allowing stable on-ladder manipulation via teleoperation.
@@ -188,7 +188,45 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <h3 class="title is-3" style="text-align: center;">LadderMan supports keyboard-based climbing direction control</h3>
+    <div class="simulation-grid single-column">
+      <div class="simulation-item">
+        <video controls loop muted playsinline autoplay preload="metadata" src="./static/videos/keyboard.mp4"></video>
+        <p class="simulation-label">Consecutive Bidirectional Climbing</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+
+<section class="section">
+  <div class="container">
+    <h3 class="title is-3" style="text-align: center;">LadderMan enables zero-shot sim-to-real transfer</h3>
+    <div class="content has-text-justified" style="width: 75%; margin: 0 auto;">
+      <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
+        A major challenge in deploying perceptive humanoid policies is the sim-to-real gap in depth observations.
+        LadderMan bridges the visual gap between simulation and real world by applying rung-focused
+        masking, vision foundation model, and minimalist noise augmentation.
+      </p>
+    </div>
+    <br>
+    <div style="text-align: center;">
+      <img src="./static/images/depth_vis.png" class="interpolation-image" style="width: 75%; height: auto;"/>
+    </div>
+    <div class="simulation-grid two-column">
+      <div class="simulation-item">
+        <video controls loop muted playsinline autoplay preload="metadata" src="./static/videos/depth_raw.mp4"></video>
+        <p class="simulation-label">Raw Depth</p>
+      </div>
+      <div class="simulation-item">
+        <video controls loop muted playsinline autoplay preload="metadata" loading="lazy" src="./static/videos/depth_vfm.mp4"></video>
+        <p class="simulation-label">VFM Depth</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
