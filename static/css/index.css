@@ -1446,6 +1446,20 @@ body {
   padding-right: 1rem;
 }
 
+.success-rate-heatmap {
+  width: 90%;
+  max-width: 1200px;
+  min-height: 440px;
+  margin: 1.5rem auto 0;
+}
+
+@media screen and (max-width: 768px) {
+  .success-rate-heatmap {
+    width: 100%;
+    min-height: 360px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .flagship-caption {
     text-align: left;

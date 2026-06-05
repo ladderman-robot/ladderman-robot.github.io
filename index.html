@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LadderMan</title>
 
+  <link rel="icon" href="./static/images/icon.png" type="image/png">
+
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -13,10 +15,15 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="./static/js/heatmap.js"></script>
   <script src="./static/js/index.js"></script>
 </head>
 
@@ -225,6 +232,34 @@
         <p class="simulation-label">VFM Depth</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h3 class="title is-3" style="text-align: center;">Robust ladder climbing across geometries</h3>
+    <div class="content has-text-justified" style="width: 75%; margin: 0 auto;">
+      <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
+        We evaluate the learned climbing policy across ladders with varying rung spacing <i>z</i> and inclination angle φ in simulation.
+        We compare LadderMan against a blind motion tracking baseline trained without perception.
+      </p>
+    </div>
+    <div id="success-rate-heatmap" class="success-rate-heatmap"></div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{zhao2026ladderman,
+      title={LadderMan: Learning Humanoid Perceptive Ladder Climbing}, 
+      author={Siheng Zhao and Yuanhang Zhang and Ziqi Lu and Pieter Abbeel and Rocky Duan and Koushil Sreenath and Yue Wang and C. Karen Liu and Guanya Shi},
+      year={2026},
+      eprint={2606.05873},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2606.05873},
+}</code></pre>
   </div>
 </section>
 
