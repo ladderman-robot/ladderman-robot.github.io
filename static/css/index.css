@@ -1453,6 +1453,11 @@ body {
   margin: 1.5rem auto 0;
 }
 
+.success-rate-heatmap .hoverlayer .hovertext,
+.success-rate-heatmap .hoverlayer text {
+  font-family: "IBM Plex Mono", monospace !important;
+}
+
 @media screen and (max-width: 768px) {
   .success-rate-heatmap {
     width: 100%;

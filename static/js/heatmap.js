@@ -15,6 +15,33 @@
 
   const X_LABELS = [20, 22, 24, 26, 28, 30];
   const Y_LABELS = [55, 60, 65, 70];
+  const X_HALF = 1;
+  const Y_HALF = 2.5;
+
+  function cellBounds(x, y) {
+    return {
+      x0: x - X_HALF,
+      x1: x + X_HALF,
+      y0: y - Y_HALF,
+      y1: y + Y_HALF,
+    };
+  }
+
+  function buildHoverShape(point) {
+    const bounds = cellBounds(point.x, point.y);
+    return {
+      type: "rect",
+      xref: point.fullData.xaxis,
+      yref: point.fullData.yaxis,
+      x0: bounds.x0,
+      x1: bounds.x1,
+      y0: bounds.y0,
+      y1: bounds.y1,
+      line: { color: "#2c3e50", width: 2.5 },
+      fillcolor: "rgba(44, 62, 80, 0.15)",
+      layer: "above",
+    };
+  }
 
   // Matplotlib Greens sampled from linspace(0.05, 0.68, 256) — matches heatmap script
   const GREENS_CMAP = [
@@ -53,6 +80,7 @@
       colorbar: colorbar,
       xgap: 2,
       ygap: 2,
+      hoverongaps: false,
       hovertemplate:
         "Inclination: %{y} deg<br>" +
         "Spacing: %{x} cm<br>" +
@@ -100,6 +128,16 @@
 
     const layout = {
       font: { family: "IBM Plex Mono, monospace" },
+      hovermode: "closest",
+      hoverlabel: {
+        bgcolor: "#ffffff",
+        bordercolor: "#2c3e50",
+        font: {
+          family: "IBM Plex Mono, monospace",
+          size: 13,
+          color: "#2c3e50",
+        },
+      },
       paper_bgcolor: "white",
       plot_bgcolor: "white",
       margin: { l: 65, r: 90, t: 60, b: 65 },
@@ -165,6 +203,18 @@
     };
 
     Plotly.newPlot(container, traces, layout, config);
+
+    container.on("plotly_hover", function (event) {
+      const point = event.points[0];
+      if (!point) {
+        return;
+      }
+      Plotly.relayout(container, { shapes: [buildHoverShape(point)] });
+    });
+
+    container.on("plotly_unhover", function () {
+      Plotly.relayout(container, { shapes: [] });
+    });
 
     window.addEventListener("resize", function () {
       Plotly.Plots.resize(container);
