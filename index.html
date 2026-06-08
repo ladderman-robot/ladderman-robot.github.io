@@ -25,6 +25,14 @@
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="./static/js/heatmap.js"></script>
   <script src="./static/js/index.js"></script>
+  <script>
+    (function () {
+      const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 900;
+      if (isMobile && !window.location.pathname.endsWith("/index-mobile.html")) {
+        window.location.replace("./index-mobile.html");
+      }
+    })();
+  </script>
 </head>
 
 <body>

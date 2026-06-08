@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Learning Humanoid Perceptive Ladder Climbing (Mobile)">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LadderMan (Mobile)</title>
+
+  <link rel="icon" href="./static/images/icon.png" type="image/png">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="./static/js/heatmap.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script>
+    (function () {
+      const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 900;
+      if (!isMobile && !window.location.pathname.endsWith("/index.html")) {
+        window.location.replace("./index.html");
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <section class="hero is-link">
+    <div class="hero-body" style="padding-top: 1.75rem; padding-bottom: 1.5rem;">
+      <div class="container has-text-centered">
+        <h1 class="title is-3" style="margin-bottom: 0.35rem; line-height: 1.1; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">
+          LadderMan
+        </h1>
+        <h2 class="subtitle is-5" style="margin-top: 0.35rem; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">
+          Learning Humanoid Perceptive Ladder Climbing
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="title is-4" style="text-align: center;">Teaser</h2>
+      <div class="has-text-centered">
+        <video controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="has-text-centered" style="margin-top: 0.75rem; font-size: 0.9rem;">
+        Random initial poses. Onboard <u>depth</u> sensing. Real-time adaptation.
+      </p>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-fullhd">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <a target="_blank" href="https://sihengz02.github.io/">Siheng Zhao</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://yuanhangz.com/">Yuanhang Zhang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://520xyxyzq.github.io/">Ziqi Lu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://people.eecs.berkeley.edu/~pabbeel/">Pieter Abbeel</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="http://rockyduan.com/">Rocky Duan</a><sup>1</sup>,
+              </span>
+
+              <br>
+              <span class="author-block">
+                <a target="_blank" href="https://scholar.google.com/citations?user=o9aFV8cAAAAJ">Koushil Sreenath</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://yuewang.xyz/">Yue Wang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://tml.stanford.edu/people/karen-liu">C. Karen Liu</a><sup>1,4</sup><sup>†</sup>
+              </span>
+              <span class="author-block">
+                <a target="_blank" href="https://www.gshi.me/">Guanya Shi</a><sup>1,5</sup><sup>†</sup>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><sup>1</sup>Amazon FAR (Frontier AI & Robotics),</span>
+              <span class="author-block"><sup>2</sup>USC,</span>
+              <span class="author-block"><sup>3</sup>UC Berkeley,</span>
+              <span class="author-block"><sup>4</sup>Stanford University,</span>
+              <span class="author-block"><sup>5</sup>CMU</span>
+            </div>
+
+            <div class="is-size-7" style="margin-top: 0.5rem; font-style: italic;">
+              <sup>†</sup> Amazon FAR Co-Lead
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a target="_blank" href="https://arxiv.org/abs/2606.05873"
+                     class="external-link button is-small is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a target="_blank" href="./static/images/LadderMan.pdf"
+                     class="external-link button is-small is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a target="_blank" href="https://www.youtube.com/shorts/hAB1VmZhKW4"
+                     class="external-link button is-small is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a target="_blank" href="https://x.com/SihengZhao/status/1975985531298476316"
+                     class="external-link button is-small is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-twitter"></i></span>
+                    <span>Summary</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a target="_blank" href="https://github.com/amazon-far/LadderMan"
+                     class="external-link button is-small is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="title is-4" style="text-align: center;">Abstract</h2>
+      <div class="content has-text-justified">
+        <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
+          Humanoid robots hold great promise for operating in human-centered environments, yet ladder climbing remains one of the most challenging tasks due to sparse footholds and handholds, complex whole-body coordination, and sensitivity to perception and control errors. We present <strong>LadderMan</strong>, a unified system that enables humanoid robots to robustly climb diverse ladders and perform manipulation under such constrained conditions. Our climbing policy is built on a scalable two-stage learning pipeline, where we use hybrid motion tracking to learn multiple climbing experts from a single reference motion, and distill these experts into a unified depth-based visuomotor climbing policy via hybrid imitation and reinforcement learning. To enable real-world deployment, we leverage vision foundation models to bridge the sim-to-real gap in depth perception.
+          Building on the learned climbing policy, we further train a separate manipulation policy using a dual-agent formulation, allowing stable on-ladder manipulation via teleoperation.
+          Experiments demonstrate that LadderMan achieves robust ladder climbing across a wide range of geometries, successfully transfers to real-world hardware in a zero-shot manner, and supports various manipulation tasks under challenging ladder constraints.
+        </p>
+      </div>
+      <div style="text-align: center; margin-top: 1rem;">
+        <img src="./static/images/method.png" class="interpolation-image" style="width: 100%; height: auto;"/>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-4" style="text-align: center;">LadderMan enables ladder climbing and on-ladder manipulation</h3>
+      <div class="simulation-grid single-column">
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" src="./static/videos/painting.mp4"></video>
+          <p class="simulation-label">Adjust a Wall Painting</p>
+        </div>
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" loading="lazy" src="./static/videos/box.mp4"></video>
+          <p class="simulation-label">Hand Off a Box from a High Shelf</p>
+        </div>
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" loading="lazy" src="./static/videos/lightbulb.mp4"></video>
+          <p class="simulation-label">Tighten a Light Bulb</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-4" style="text-align: center;">LadderMan supports keyboard-based climbing direction control</h3>
+      <div class="simulation-grid single-column">
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" src="./static/videos/keyboard.mp4"></video>
+          <p class="simulation-label">Consecutive Bidirectional Climbing</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-4" style="text-align: center;">LadderMan enables zero-shot sim-to-real transfer</h3>
+      <div class="content has-text-justified">
+        <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
+          A major challenge in deploying perceptive humanoid policies is the sim-to-real gap in depth observations.
+          LadderMan bridges the visual gap between simulation and real world by applying rung-focused
+          masking, vision foundation model, and minimalist noise augmentation.
+        </p>
+      </div>
+      <div style="text-align: center; margin-top: 1rem;">
+        <img src="./static/images/depth_vis.png" class="interpolation-image" style="width: 100%; height: auto;"/>
+      </div>
+      <div class="simulation-grid single-column">
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" src="./static/videos/depth_raw.mp4"></video>
+          <p class="simulation-label">Raw Depth</p>
+        </div>
+        <div class="simulation-item">
+          <video controls loop muted playsinline preload="metadata" loading="lazy" src="./static/videos/depth_vfm.mp4"></video>
+          <p class="simulation-label">VFM Depth</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-4" style="text-align: center;">Robust ladder climbing across geometries</h3>
+      <div class="content has-text-justified">
+        <p class="abstract-text" style="font-size: 0.95rem; line-height: 1.5;">
+          We evaluate the learned climbing policy across ladders with varying rung spacing <i>z</i> and inclination angle φ in simulation.
+          We compare LadderMan against a blind motion tracking baseline trained without perception.
+        </p>
+      </div>
+      <div id="success-rate-heatmap" class="success-rate-heatmap"></div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container content">
+      <h2 class="title is-4">BibTeX</h2>
+      <pre style="font-size: 0.7rem; overflow-x: auto;"><code>@misc{zhao2026ladderman,
+      title={LadderMan: Learning Humanoid Perceptive Ladder Climbing},
+      author={Siheng Zhao and Yuanhang Zhang and Ziqi Lu and Pieter Abbeel and Rocky Duan and Koushil Sreenath and Yue Wang and C. Karen Liu and Guanya Shi},
+      year={2026},
+      eprint={2606.05873},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2606.05873},
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a>.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
