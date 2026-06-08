@@ -60,10 +60,11 @@
     return matrix.map((row) => row.map((value) => value.toFixed(2)));
   }
 
-  function isMobileView() {
+  function isMobileView(container) {
     return (
+      (container && container.dataset.layout === "mobile") ||
       document.body.classList.contains("is-mobile-page") ||
-      window.location.pathname.includes("index-mobile.html") ||
+      /index-mobile\.html/i.test(window.location.pathname) ||
       window.innerWidth <= 768
     );
   }
@@ -86,6 +87,7 @@
         "Inclination: %{y} deg<br>" +
         "Spacing: %{x} cm<br>" +
         "Success rate: %{z:.2f}<extra></extra>",
+      texttemplate: "",
     };
 
     if (showCellText) {
@@ -107,7 +109,8 @@
       return;
     }
 
-    const showCellText = !isMobileView();
+    const mobile = isMobileView(container);
+    const showCellText = !mobile;
 
     const traces = [
       Object.assign(
@@ -131,7 +134,7 @@
       ),
     ];
 
-    const mobile = isMobileView();
+    const mobile = isMobileView(container);
     const spacingAxisTitle = "Spacing, <i>z</i> (cm)";
 
     const axisStyle = {
