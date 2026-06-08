@@ -60,19 +60,20 @@
     return matrix.map((row) => row.map((value) => value.toFixed(2)));
   }
 
-  function buildHeatmapTrace(matrix, textColor, showScale, colorbar) {
-    return {
+  function isMobileView() {
+    return (
+      document.body.classList.contains("is-mobile-page") ||
+      window.location.pathname.includes("index-mobile.html") ||
+      window.innerWidth <= 768
+    );
+  }
+
+  function buildHeatmapTrace(matrix, textColor, showScale, colorbar, showCellText) {
+    const trace = {
       type: "heatmap",
       z: matrix,
       x: X_LABELS,
       y: Y_LABELS,
-      text: formatMatrix(matrix),
-      texttemplate: "%{text}",
-      textfont: {
-        family: "IBM Plex Mono, monospace",
-        size: 16,
-        color: textColor,
-      },
       colorscale: GREENS_CMAP,
       zmin: 0,
       zmax: 1,
@@ -86,6 +87,18 @@
         "Spacing: %{x} cm<br>" +
         "Success rate: %{z:.2f}<extra></extra>",
     };
+
+    if (showCellText) {
+      trace.text = formatMatrix(matrix);
+      trace.texttemplate = "%{text}";
+      trace.textfont = {
+        family: "IBM Plex Mono, monospace",
+        size: 16,
+        color: textColor,
+      };
+    }
+
+    return trace;
   }
 
   function renderSuccessRateHeatmap(containerId) {
@@ -94,9 +107,11 @@
       return;
     }
 
+    const showCellText = !isMobileView();
+
     const traces = [
       Object.assign(
-        buildHeatmapTrace(METHOD1, "white", false, undefined),
+        buildHeatmapTrace(METHOD1, "white", false, undefined, showCellText),
         { xaxis: "x", yaxis: "y" }
       ),
       Object.assign(
@@ -111,20 +126,60 @@
           len: 0.85,
           thickness: 18,
           xpad: 8,
-        }),
+        }, showCellText),
         { xaxis: "x2", yaxis: "y2" }
       ),
     ];
 
+    const mobile = isMobileView();
+    const spacingAxisTitle = "Spacing, <i>z</i> (cm)";
+
     const axisStyle = {
-      titlefont: { family: "IBM Plex Mono, monospace", size: 16 },
-      tickfont: { family: "IBM Plex Mono, monospace", size: 13 },
+      titlefont: { family: "IBM Plex Mono, monospace", size: mobile ? 13 : 16 },
+      tickfont: { family: "IBM Plex Mono, monospace", size: mobile ? 11 : 13 },
       showgrid: false,
       zeroline: false,
       ticks: "outside",
       mirror: false,
       showline: false,
     };
+
+    const annotations = [
+      {
+        text: "<b>LadderMan</b>",
+        x: 0.5,
+        y: 1.08,
+        xref: "x domain",
+        yref: "paper",
+        xanchor: "center",
+        showarrow: false,
+        font: { family: "IBM Plex Mono, monospace", size: mobile ? 15 : 18 },
+      },
+      {
+        text: "<b>Baseline</b>",
+        x: 0.5,
+        y: 1.08,
+        xref: "x2 domain",
+        yref: "paper",
+        xanchor: "center",
+        showarrow: false,
+        font: { family: "IBM Plex Mono, monospace", size: mobile ? 15 : 18 },
+      },
+    ];
+
+    if (mobile) {
+      annotations.push({
+        text: spacingAxisTitle,
+        x: 0.5,
+        y: -0.28,
+        xref: "paper",
+        yref: "paper",
+        xanchor: "center",
+        yanchor: "top",
+        showarrow: false,
+        font: { family: "IBM Plex Mono, monospace", size: 13 },
+      });
+    }
 
     const layout = {
       font: { family: "IBM Plex Mono, monospace" },
@@ -140,10 +195,12 @@
       },
       paper_bgcolor: "white",
       plot_bgcolor: "white",
-      margin: { l: 65, r: 90, t: 60, b: 65 },
+      margin: mobile
+        ? { l: 52, r: 72, t: 56, b: 118 }
+        : { l: 65, r: 90, t: 60, b: 65 },
       xaxis: Object.assign({}, axisStyle, {
         domain: [0.0, 0.46],
-        title: { text: "Spacing, <i>z</i> (cm)" },
+        title: mobile ? undefined : { text: spacingAxisTitle },
         tickmode: "array",
         tickvals: X_LABELS,
         ticktext: X_LABELS.map((value) => value.toFixed(2)),
@@ -160,7 +217,7 @@
       }),
       xaxis2: Object.assign({}, axisStyle, {
         domain: [0.50, 0.98],
-        title: { text: "Spacing, <i>z</i> (cm)" },
+        title: mobile ? undefined : { text: spacingAxisTitle },
         tickmode: "array",
         tickvals: X_LABELS,
         ticktext: X_LABELS.map((value) => value.toFixed(2)),
@@ -172,28 +229,7 @@
         autorange: "reversed",
         anchor: "x2",
       }),
-      annotations: [
-        {
-          text: "<b>LadderMan</b>",
-          x: 0.5,
-          y: 1.08,
-          xref: "x domain",
-          yref: "paper",
-          xanchor: "center",
-          showarrow: false,
-          font: { family: "IBM Plex Mono, monospace", size: 18 },
-        },
-        {
-          text: "<b>Baseline</b>",
-          x: 0.5,
-          y: 1.08,
-          xref: "x2 domain",
-          yref: "paper",
-          xanchor: "center",
-          showarrow: false,
-          font: { family: "IBM Plex Mono, monospace", size: 18 },
-        },
-      ],
+      annotations: annotations,
     };
 
     const config = {

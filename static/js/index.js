@@ -21,8 +21,10 @@ function setInterpolationImage(i) {
 
 
 $(document).ready(function() {
+    const isMobilePage = window.location.pathname.includes("index-mobile.html");
+
     // Remove interactive demo section on mobile devices to prevent loading
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && !isMobilePage) {
         $('.interactive-demo-section').remove();
         console.log('Interactive demo removed on mobile device');
         

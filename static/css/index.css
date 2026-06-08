@@ -1461,8 +1461,14 @@ body {
 @media screen and (max-width: 768px) {
   .success-rate-heatmap {
     width: 100%;
-    min-height: 360px;
+    min-height: 380px;
+    padding-bottom: 0.5rem;
   }
+}
+
+.is-mobile-page .success-rate-heatmap {
+  min-height: 400px;
+  padding-bottom: 0.75rem;
 }
 
 @media screen and (max-width: 768px) {
