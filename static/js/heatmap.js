@@ -111,6 +111,7 @@
 
     const mobile = isMobileView(container);
     const showCellText = !mobile;
+    const spacingAxisTitle = "Spacing, <i>z</i> (cm)";
 
     const traces = [
       Object.assign(
@@ -133,9 +134,6 @@
         { xaxis: "x2", yaxis: "y2" }
       ),
     ];
-
-    const mobile = isMobileView(container);
-    const spacingAxisTitle = "Spacing, <i>z</i> (cm)";
 
     const axisStyle = {
       titlefont: { family: "IBM Plex Mono, monospace", size: mobile ? 13 : 16 },
